@@ -1,9 +1,9 @@
 <?php
 require('top.inc.php');
 
-if(isset($_GET['type']) && $_GET['type']!=''){
+if(isset($_GET['type']) && $_GET['type'] != ''){
 	$type = get_safe_value($con, $_GET['type']);
-	if($type=='delete'){
+	if($type == 'delete'){
 		$id = get_safe_value($con, $_GET['id']);
 		$delete_sql = "delete from NhaCungCap where maNhaCungCap = '$id'";
 		mysqli_query($con, $delete_sql);
@@ -33,6 +33,7 @@ $res=mysqli_query($con,$sql);
 							   <th>Số điện thoại</th>
 							   <th>Địa chỉ</th>
 							   <th></th>
+							   <th></th>
 							</tr>
 						 </thead>
 						 <tbody>
@@ -47,8 +48,8 @@ $res=mysqli_query($con,$sql);
 							   <td><?php echo $row['diaChi']?></td>
 							   <td>
 								<?php
-								echo "<span class='badge badge-delete'><a href='?type=delete&id=".$row['maNhaCungCap']."'>Delete</a></span>";
-								// echo "<span class='badge badge-delete'><a href='?type=delete&id=".$row['id']."'>Delete</a></span>";
+								echo "<span class='badge badge-edit'><a href='manage_suppliers.php?id=".$row['maNhaCungCap']."'>Chỉnh sửa</a></span>&nbsp;";
+								echo "<span class='badge badge-delete'><a href='?type=delete&id=".$row['maNhaCungCap']."'>Xóa</a></span>";
 								?>
 							   </td>
 							</tr>

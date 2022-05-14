@@ -2,28 +2,20 @@
 require('top.inc.php');
 
 if(isset($_GET['type']) && $_GET['type']!=''){
-	$type=get_safe_value($con,$_GET['type']);
-	if($type=='status'){
-		$operation=get_safe_value($con,$_GET['operation']);
-		$id=get_safe_value($con,$_GET['id']);
-		if($operation=='active'){
-			$status='1';
-		}else{
-			$status='0';
-		}
-		$update_status_sql="update product set status='$status' where id='$id'";
-		mysqli_query($con,$update_status_sql);
-	}
-	
+	$type = get_safe_value($con, $_GET['type']);
+
 	if($type=='delete'){
-		$id=get_safe_value($con,$_GET['id']);
-		$delete_sql="delete from product where id='$id'";
-		mysqli_query($con,$delete_sql);
+		$id = get_safe_value($con, $_GET['id']);
+		$delete_sql="delete from SanPham where masanPham = '$id'";
+		mysqli_query($con, $delete_sql);
 	}
 }
 
-$sql="select product.*,categories.categories from product,categories where product.categories_id=categories.id order by product.id desc";
-$res=mysqli_query($con,$sql);
+$sql = "select SanPham.*, DanhMuc.tenDanhMuc 
+		from SanPham, DanhMuc 
+		where SanPham.maDanhMuc = DanhMuc.maDanhMuc 
+		order by SanPham.maDanhMuc desc";
+$res = mysqli_query($con, $sql);
 ?>
 <div class="content pb-0">
 	<div class="orders">
@@ -31,8 +23,8 @@ $res=mysqli_query($con,$sql);
 		  <div class="col-xl-12">
 			 <div class="card">
 				<div class="card-body">
-				   <h4 class="box-title">Products </h4>
-				   <h4 class="box-link"><a href="manage_product.php">Add Product</a> </h4>
+				   <h4 class="box-title">Sản phẩm </h4>
+				   <h4 class="box-link"><a href="manage_product.php">Thêm sản phẩm</a> </h4>
 				</div>
 				<div class="card-body--">
 				   <div class="table-stats order-table ov-h">
@@ -40,40 +32,34 @@ $res=mysqli_query($con,$sql);
 						 <thead>
 							<tr>
 							   <th class="serial">#</th>
-							   <th>ID</th>
-							   <th>Categories</th>
-							   <th>Name</th>
-							   <th>Image</th>
-							   <th>MRP</th>
-							   <th>Price</th>
-							   <th>Qty</th>
+							   <th>Mã sản phẩm</th>
+							   <th>Tên sản phẩm</th>
+							   <th>Giá</th>
+							   <th>Thông tin sản phẩm</th>
+							   <th>Ảnh</th>
+							   <th>Số lượng</th>
+							   <th>Danh mục</th>
 							   <th></th>
 							</tr>
 						 </thead>
 						 <tbody>
 							<?php 
-							$i=1;
-							while($row=mysqli_fetch_assoc($res)){?>
+							$i = 1;
+							while($row = mysqli_fetch_assoc($res)){?>
 							<tr>
 							   <td class="serial"><?php echo $i?></td>
-							   <td><?php echo $row['id']?></td>
-							   <td><?php echo $row['categories']?></td>
-							   <td><?php echo $row['name']?></td>
-							   <td><img src="<?php echo PRODUCT_IMAGE_SITE_PATH.$row['image']?>"/></td>
-							   <td><?php echo $row['mrp']?></td>
-							   <td><?php echo $row['price']?></td>
-							   <td><?php echo $row['qty']?></td>
+							   <td><?php echo $row['maSanPham']?></td>
+							   <td><?php echo $row['tenSanPham']?></td>
+							   <td><?php echo $row['gia']?></td>
+							   <td><?php echo $row['thongTinSanPham']?></td>
+							   <td><img src="<?php echo 'images/products/'.$row['anh']?>"/></td>
+							   <td><?php echo $row['soLuong']?></td>
+							   <td><?php echo $row['tenDanhMuc']?></td>
 							   <td>
-								<?php
-								if($row['status']==1){
-									echo "<span class='badge badge-complete'><a href='?type=status&operation=deactive&id=".$row['id']."'>Active</a></span>&nbsp;";
-								}else{
-									echo "<span class='badge badge-pending'><a href='?type=status&operation=active&id=".$row['id']."'>Deactive</a></span>&nbsp;";
-								}
-								echo "<span class='badge badge-edit'><a href='manage_product.php?id=".$row['id']."'>Edit</a></span>&nbsp;";
+								<?php 
+								echo "<span class='badge badge-edit'><a href='manage_product.php?id=".$row['maSanPham']."'>Chỉnh sửa</a></span>&nbsp;";
 								
-								echo "<span class='badge badge-delete'><a href='?type=delete&id=".$row['id']."'>Delete</a></span>";
-								
+								echo "<span class='badge badge-delete'><a href='?type=delete&id=".$row['maSanPham']."'>Xóa</a></span>";
 								?>
 							   </td>
 							</tr>

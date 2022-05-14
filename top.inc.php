@@ -1,12 +1,12 @@
 <?php
-require('connection.inc.php');
-require('functions.inc.php');
-if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
+   require('connection.inc.php');
+   require('functions.inc.php');
+   if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
 
-}else{
-	header('location:login.php');
-	die();
-}
+   }else{
+      header('location:login.php');
+      die();
+   }
 ?>
 <!doctype html>
 <html class="no-js" lang="">
@@ -14,7 +14,7 @@ if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
    <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Dashboard Page</title>
+      <title>Trang chủ</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="assets/css/normalize.css">
       <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -39,7 +39,7 @@ if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
                      <a href="product.php" > Sản phẩm</a>
                   </li>
 				  <li class="menu-item-has-children dropdown">
-                     <a href="#" > Đơn hàng</a>
+                     <a href="index.php" > Đơn hàng</a>
                   </li>
 				  <li class="menu-item-has-children dropdown">
                      <a href="users.php" > Người dùng</a>
@@ -56,7 +56,7 @@ if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!=''){
          <header id="header" class="header">
             <div class="top-left">
                <div class="navbar-header">
-                  <a class="navbar-brand" href="index.php"><img src="images/logo.png" alt="Logo"></a>
+                  <a class="navbar-brand" href="index.php"><img src="images/logo_nhom2.png" alt="Logo"></a>
                   <a class="navbar-brand hidden" href="index.php"><img src="images/logo2.png" alt="Logo"></a>
                   <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                </div>

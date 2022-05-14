@@ -19,7 +19,7 @@
 		$categories = get_safe_value($con,$_POST['categories']);
 		$res = mysqli_query($con,"select * from DanhMuc where maDanhMuc='$categories'");
 		$check= mysqli_num_rows($res);
-		if($check>0){
+		if($check > 0){
 			if(isset($_GET['id']) && $_GET['id']!=''){
 				$getData=mysqli_fetch_assoc($res);
 				if($id==$getData['id']){

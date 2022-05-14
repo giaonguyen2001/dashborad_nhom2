@@ -6,11 +6,13 @@
 	$msg = '';
 	if(isset($_GET['id']) && $_GET['id'] != ''){
 		$id = get_safe_value($con, $_GET['id']);
-		$res = mysqli_query($con, "select * from nhaCungCap where maNhaCungCap='$id'");
+		$res = mysqli_query($con, "select * from nhaCungCap where maNhaCungCap = '$id'");
 		$check = mysqli_num_rows($res);
 		if($check > 0){
 			$row = mysqli_fetch_assoc($res);
 			$suppliers = $row['maNhaCungCap'];
+			$sdt = $row['soDienThoai'];
+			$address = $row['diaChi'];
 		}else{
 			header('location:supplier.php');
 			die();
@@ -18,27 +20,29 @@
 	}
 
 	if(isset($_POST['submit'])){
-		$suppliers = get_safe_value($con,$_POST['suppliers']);
-		$res = mysqli_query($con,"select * from DanhMuc where maDanhMuc='$suppliers'");
-		$check= mysqli_num_rows($res);
-		if($check>0){
+		$suppliers = get_safe_value($con, $_POST['suppliers']);
+		$sdt = get_safe_value($con, $_POST['sdt']);
+		$address = get_safe_value($con, $_POST['address']);
+		$res = mysqli_query($con, "select * from NhaCungCap where maNhaCungCap = '$suppliers'");
+		$check = mysqli_num_rows($res);
+		if($check > 0){
 			if(isset($_GET['id']) && $_GET['id']!=''){
-				$getData=mysqli_fetch_assoc($res);
-				if($id==$getData['id']){
+				$getData = mysqli_fetch_assoc($res);
+				if($id == $getData['id']){
 				
 				}else{
-					$msg="Da ton tai";
+					$msg = "Da ton tai";
 				}
 			}else{
-				$msg="Da ton tai";
+				$msg = "Da ton tai";
 			}
 		}
 		
-		if($msg==''){
+		if($msg == ''){
 			if(isset($_GET['id']) && $_GET['id']!=''){
-				mysqli_query($con,"update DanhMuc set tenDanhMuc='$suppliers' where maDanhMuc='$id'");
+				mysqli_query($con, "update NhaCungCap set tenNhaCungcap='$suppliers' where maNhaCungcap = '$id'");
 			}else{
-				mysqli_query($con,"insert into NhaCungCap(tenNhaCungCap,soDienThoai,diaChi) values('$suppliers','$sdt','$address')");
+				mysqli_query($con, "insert into NhaCungCap(tenNhaCungCap,soDienThoai,diaChi) values('$suppliers','$sdt','$address')");
 			}
 			header('location:supplier.php');
 			die();
@@ -54,11 +58,11 @@
                         <form method="post">
 							<div class="card-body card-block">
 							   <div class="form-group">
-									<label for="categories" class=" form-control-label"></label>
+									<label for="suppliers" class=" form-control-label"></label>
 									<input type="text" name="suppliers" placeholder="Nhập tên nhà cung cấp" class="form-control" required value="<?php echo $suppliers?>">
-									<label for="categories" class=" form-control-label"></label>
+									<label for="suppliers" class=" form-control-label"></label>
 									<input type="text" name="sdt" placeholder="Nhập số điện thoại" class="form-control" required value="<?php echo $sdt?>">
-									<label for="categories" class=" form-control-label"></label>
+									<label for="supplier" class=" form-control-label"></label>
 									<input type="text" name="address" placeholder="Nhập địa chỉ" class="form-control" required value="<?php echo $address?>">
 								</div>
 							   <button id="payment-button" name="submit" type="submit" class="btn btn-lg btn-info btn-block">
